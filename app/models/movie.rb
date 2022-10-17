@@ -17,16 +17,19 @@ class Movie < ApplicationRecord
     my_director_id = self.director_id
 
     matching_directors = Director.where({ :id => my_director_id })
-    
+
     the_director = matching_directors.at(0)
 
     return the_director
   end
+  # validates(:director_id, { :presence => true }) <-- feature of active records
+  # validates(:title, { :uniqueness => true })
+  # validates(:title, { :uniqueness => { :scope => [:year] } })
   def director_name_or_uh_oh
     if self.director != nil
       return self.director.name
     else
       return "Uh oh! We weren't able to find a director for this movie."
     end
-  end   
+  end
 end
